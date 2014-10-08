@@ -73,18 +73,20 @@ function restaurar(json_str){
 
 	montaJogo();
 
-	certosErrados(certos,'success');
-	certosErrados(erradas,'error');
+	certosErrados(certos,'success',true);
+	certosErrados(erradas,'error',false);
 
 	atualizaScore();
 
 }
 
 
-function certosErrados(vetor,classe){
+function certosErrados(vetor,classe,op){
 	for(var i = 0; i < vetor.length; i++){
 		var index = palavras.indexOf(vetor[i]);
-		var tr = document.getElementById("tr_"+index); 
+		var tr = document.getElementById("tr_"+index);
+		if(op)
+			document.getElementById(index).value = vetor[i].portugues; 
 		tr.setAttribute("class",classe);
 		document.getElementById(index).disabled = true;
 	}
