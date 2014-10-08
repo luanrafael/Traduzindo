@@ -306,7 +306,7 @@ function adicionar(){
 	addPalavra('rubbish',['lixo']);
 	addPalavra('hollow',['oco']);
 	addPalavra('solid',['sólido']);
-	addPalavra('fall to pieces',['cais aos pedaços']);
+	addPalavra('fall to pieces',['cair aos pedaços']);
 	addPalavra('the lot',['o lote']);
 	addPalavra('represent',['representar']);
 	addPalavra('representative',['representante']);
