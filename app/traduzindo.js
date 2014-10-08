@@ -85,10 +85,13 @@ function certosErrados(vetor,classe,op){
 	for(var i = 0; i < vetor.length; i++){
 		var index = palavras.indexOf(vetor[i]);
 		var tr = document.getElementById("tr_"+index);
-		if(op)
+		
+		if(op){
 			document.getElementById(index).value = vetor[i].portugues; 
+			document.getElementById(index).disabled = true;
+		}
+
 		tr.setAttribute("class",classe);
-		document.getElementById(index).disabled = true;
 	}
 }
 
@@ -212,7 +215,7 @@ function adicionar(){
 	addPalavra('poetry',['poesia']);
 	addPalavra('measurement',['medida']);
 	addPalavra('report',['relatório']);
-	addPalavra('retporter',['repoter']);
+	addPalavra('reporter',['reporter']);
 	addPalavra('misbehaviour',['mal comportamento']);
 	addPalavra('well done',['muito bem']);
 	addPalavra('set',['conjunto']);
