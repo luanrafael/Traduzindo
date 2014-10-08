@@ -41,16 +41,12 @@ window.onload = function () {
 
 	}
 
-
-
 	palavras = [];
 	adicionar();
 	montaJogo();
 	atualizaScore();
 
 }
-
-var xx;
 
 function restaurar(json_str){
 	
@@ -60,12 +56,13 @@ function restaurar(json_str){
 	var erradas = [];
 	for(var i = 0; i < vetor.length; i++){
 		var p = vetor[i];
-		console.log(p);
 		var new_p = Palavra(p.ingles, p.portugues, p.certa);
 		palavras.push(new_p);
+		
 		if(p.certa == 1){
 			certos.push(new_p);
 		}
+		
 		if(p.certa == 2){
 			erradas.push(new_p);
 		}
@@ -77,9 +74,47 @@ function restaurar(json_str){
 	certosErrados(erradas,'error',false);
 
 	atualizaScore();
+	hideSuccess();
 
 }
 
+
+function reiniciar(){
+	localStorage.removeItem("palavras");
+	location.reload();
+}
+
+function showAll(element){
+
+
+	var arg = element.getAttribute("data-text");
+	if(arg == 1){
+		element.textContent = "Esconder";
+		element.setAttribute("data-text",0);
+		setDisplay("success",'');
+	}
+	else{
+		element.textContent = "Mostrar Todos";
+		element.setAttribute("data-text",1);
+		hideSuccess();
+	}
+
+
+}
+
+function setDisplay(classe,display){
+	var vetor = document.getElementsByClassName(classe);
+
+	for(var i = 0; i < vetor.length; i++){
+		vetor[i].style.display = display;
+	}
+}
+
+
+function hideSuccess(){
+	setDisplay("success",'none');
+
+}
 
 function certosErrados(vetor,classe,op){
 	for(var i = 0; i < vetor.length; i++){
@@ -100,10 +135,11 @@ function traduzir(id){
 	var eng = palavras[id];
 	var pt = document.getElementById(id);
 	var tr = document.getElementById("tr_"+id); 
-	
+	pt.value = pt.value.toUpperCase();
 	if(eng.traducao(pt.value)){
 		tr.setAttribute("class","success");
 		pt.disabled = true;
+		tr.style.display = 'none';
 		atualizaScore();
 		return true;
 	}
@@ -126,7 +162,11 @@ function atualizaScore(){
 }
 
 function addPalavra(eng,pt){
-	palavras.push(Palavra(eng,pt,0));
+	console.log(palavras);
+	for(var i = 0; i < pt.length; i++){
+		pt[i] = pt[i].toUpperCase();
+	}
+	palavras.push(Palavra(eng.toUpperCase(),pt,0));
 }
 
 
@@ -169,6 +209,25 @@ function make(element){
 	return document.createElement(element);
 }
 
+function semAcento( newStringComAcento ) {
+  var string = newStringComAcento;
+	var mapaAcentosHex 	= {
+		a : /[\xE0-\xE6]/g,
+		e : /[\xE8-\xEB]/g,
+		i : /[\xEC-\xEF]/g,
+		o : /[\xF2-\xF6]/g,
+		u : /[\xF9-\xFC]/g,
+		c : /\xE7/g,
+		n : /\xF1/g
+	};
+ 
+	for ( var letra in mapaAcentosHex ) {
+		var expressaoRegular = mapaAcentosHex[letra];
+		string = string.replace( expressaoRegular, letra );
+	}
+ 
+	return string;
+}
 
 
 function adicionar(){
@@ -264,10 +323,11 @@ function adicionar(){
 	addPalavra('dressmaker',['costureira']);
 	addPalavra('designer',['estilista']);
 	addPalavra('baggage',['bagagem']);
-	addPalavra('treat',['treatment']);
+	addPalavra('treat',['tratar']);
+	addPalavra('treatment',['tratamento']);
 	addPalavra('shock',['choque']);
 	addPalavra('allowance',['mesada']);
-	addPalavra('make allowance',['abrir uma execeção']);
+	addPalavra('make allowance',['abrir uma exceção']);
 	addPalavra('jet',['jato']);
 	addPalavra('sharp',['afiado']);
 	addPalavra('process',['processo']);
@@ -303,7 +363,7 @@ function adicionar(){
 	addPalavra('sheet',['lençol','folha']);
 	addPalavra('blanket',['cobertor']);
 	addPalavra('ray',['raio']);
-	addPalavra('fever',['fabre']);
+	addPalavra('fever',['febre']);
 	addPalavra('ski',['esquiar']);
 	addPalavra('sauce',['molho']);
 	addPalavra('veil',['véu']);
@@ -344,7 +404,7 @@ function adicionar(){
 	addPalavra('tablecoth',['toalha de mesa']);
 	addPalavra('file',['arquivo']);
 	addPalavra('known',['conhecido']);
-	addPalavra('face',['desbotar']);
+	addPalavra('fade',['desbotar']);
 	addPalavra('sunlight',['luz do sol']);
 	addPalavra('do up',['amarrar']);
 	addPalavra('undo',['desamarrar']);
@@ -382,7 +442,7 @@ function adicionar(){
 	addPalavra('deaf',['surdo']);
 	addPalavra('blame',['culpar']);
 	addPalavra('court',['quadra']);
-	addPalavra('rectangle',['retangulo']);
+	addPalavra('rectangle',['retângulo']);
 	addPalavra('rectangular',['retangular']);
 	addPalavra('net',['rede']);
 	addPalavra('tame',['manso']);
